@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [vue()],
   optimizeDeps: {
     nodeModules: {
-      maxMem: 512,
+      maxMem: 450,
     },
   },
 });
