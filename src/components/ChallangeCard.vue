@@ -1,35 +1,30 @@
 <template>
-  <div class="card neon-card">
-    <div class="row g-0">
-      <div class="col">
-        <img class="card-image" :src="challengeImage" alt="Event Image" />
+  <img class="card-image" :src="challengeImage" alt="Event Image" />
+  <!-- </div>
+  <div class="" v-if="show">
+    <div class="card-body">
+      <div class="body-1">
+        <div class="card-title">{{ challengeTitle }}</div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">
+            {{ challengeDescription }}
+          </li>
+          <li class="list-group-item">
+            <strong>Price pool:</strong> {{ challengePrize }}
+          </li>
+          <li class="list-group-item">
+            <strong> Participants:</strong> {{ challengeParticipants }}
+          </li>
+          <li class="list-group-item">
+            <strong>Time:</strong> {{ challengeTime }}
+          </li>
+        </ul>
       </div>
-      <div class="col">
-        <div class="card-body">
-          <div class="body-1">
-            <div class="card-title">{{ challengeTitle }}</div>
-            <ul class="list-group list-group-flush">
-              <li class="list-group-item">
-                {{ challengeDescription }}
-              </li>
-              <li class="list-group-item">
-                <strong>Price pool:</strong> {{ challengePrize }}
-              </li>
-              <li class="list-group-item">
-                <strong> Participants:</strong> {{ challengeParticipants }}
-              </li>
-              <li class="list-group-item">
-                <strong>Time:</strong> {{ challengeTime }}
-              </li>
-            </ul>
-          </div>
-          <div class="card-footer card-action">
-            <button class="btn btn-sm btn-danger">More details</button>
-          </div>
-        </div>
+      <div class="card-footer card-action">
+        <button class="btn btn-sm btn-danger">More details</button>
       </div>
     </div>
-  </div>
+  -->
 </template>
   
   <script>
@@ -111,21 +106,17 @@ export default {
   border-radius: 0.25rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
-
 .card-image {
-  max-width: 100%;
-  height: 100%; /* set height to 100% */
-  height: 355px;
-
+  height: 200px;
   object-fit: cover; /* maintain aspect ratio and crop to fill */
-  border-radius: 6px 0px 0px 6px;
+  border-radius: 6px;
   padding: 3px;
 }
 
 @media only screen and (max-width: 768px) {
   .card-image {
-    height: auto;
     height: 100%;
+    max-width: 50%;
   }
 }
 

@@ -11,7 +11,7 @@
     >
       <Slide v-for="slide in slides" :key="slide">
         <div class="carousel__item">
-          <img :src="slide.image" alt="" />
+          <img :src="domain + slide.image" alt="" />
           <div class="carousel__item_text" v-if="slide.showDescription">
             <h4 class="slidetitle">{{ slide.title }}</h4>
             <p class="slidetext slid-description">{{ slide.description }}</p>
@@ -28,38 +28,39 @@
       </template>
     </carousel>
 
-    <!-- <div class="sub-header-main">
-      <h3 class="sub-header">TOP GAMES</h3>
-
-      <Carousel :settings="settings" :breakpoints="breakpoints">
-        <Slide v-for="slide in gamesslides" :key="slide">
-          <div class="carousel__games">
-            <div class="game-card">
-              <img :src="'/public/games/' + slide.gamebanner" alt="" />
-              <p class="carousel__games_image-text">{{ slide.gametitle }}</p>
-            </div>
-          </div>
-        </Slide>
-
-        <template #addons>
-          <Navigation v-if="windowWidth < 1000" />
-        </template>
-      </Carousel>
-    </div>-->
-
-    <div class="sub-header-main">
-      <SubHeader title="UPCOMING CHALLENGES" linkto="/"></SubHeader>
+    <div v-if="show" class="sub-header-main">
+      <SubHeader title="TOP GAMES" linkto="/"></SubHeader>
       <div class="sub-container">
+        <Carousel :settings="settings" :breakpoints="breakpoints">
+          <Slide v-for="slide in gamesslides" :key="slide">
+            <div class="carousel__games">
+              <div class="game-card">
+                <img :src="domain + slide.gamebanner" alt="" />
+                <p class="carousel__games_image-text">{{ slide.gametitle }}</p>
+              </div>
+            </div>
+          </Slide>
+
+          <template #addons>
+            <Navigation v-if="windowWidth < 1000" />
+          </template>
+        </Carousel>
+      </div>
+    </div>
+
+    <div class="sub-header-main container-fluid">
+      <SubHeader title="TOP GAMES" linkto="/"></SubHeader>
+      <div class="sub-container sub-space game-card-container">
         <NoDataComponent
           v-if="challages.length == 0"
           datatype="challanges"
         ></NoDataComponent>
         <ChallangeCard
+          class=""
           v-else
-          class="col-lg-4 col-sm col-sm g-0"
           v-for="c in challages"
           :key="c.id"
-          :challengeImage="c.image"
+          :challengeImage="domain + c.image"
           :challengeTitle="c.title"
           :challengeDescription="c.discription"
           :challengePrize="c.pricepool"
@@ -79,9 +80,9 @@
       </div>
     </div>
 
-    <div class="sub-header-main">
+    <div class="sub-header-main container-fluid">
       <SubHeader title="UPCOMING EVENTS" linkto="/"></SubHeader>
-      <div class="sub-container">
+      <div class="sub-container sub-space">
         <NoDataComponent
           v-if="events.length == 0"
           datatype="events"
@@ -91,7 +92,7 @@
           class="col-lg-3 col-sm-6 col-xs-12"
           v-for="e in events"
           :key="e.id"
-          :eventImage="e.image"
+          :eventImage="domain + e.image"
           :eventName="e.eventName"
           :eventDescription="e.eventDescription"
           :eventDate="e.eventDate"
@@ -103,7 +104,7 @@
       </div>
     </div>
 
-    <div class="sub-header-main">
+    <div v-if="show" class="sub-header-main container-fluid">
       <SubHeader title="UPCOMING TOURNAMENTS" linkto="/"></SubHeader>
       <div class="sub-container">
         <NoDataComponent
@@ -163,6 +164,7 @@ export default {
   },
   data() {
     return {
+      domain: "https://riogamers.lk",
       isloading: true,
       slides: [],
       challages: [],

@@ -1,29 +1,37 @@
 <template>
-  <div class="card neon-card event-card mb-3">
+  <div class="card neon-card event-card">
     <img class="event-image" :src="eventImage" alt="Event Image" />
     <div class="card-body">
-      <div class="">
-        <h5 class="card-">{{ eventName }}</h5>
+      <h5 class="card-">{{ eventName }}</h5>
+      <div class="items-list">
+        <detail-item
+          name="Date"
+          :description="formatDate(eventDate)"
+        ></detail-item>
+        <detail-item
+          name="Time"
+          :description="formatTime(eventTime)"
+        ></detail-item>
+        <detail-item name="Location" :description="eventLocation"></detail-item>
+        <detail-item name="Game" :description="eventGame"></detail-item>
       </div>
-      <p class="card-text">{{ eventDescription }}</p>
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item"><strong>Date:</strong> {{ eventDate }}</li>
-        <li class="list-group-item"><strong>Time:</strong> {{ eventTime }}</li>
-        <li class="list-group-item">
-          <strong>Location:</strong> {{ eventLocation }}
-        </li>
-        <li class="list-group-item"><strong>Game:</strong> {{ eventGame }}</li>
-      </ul>
     </div>
     <div class="card-footer">
-      <a href="{{ eventLink }}" class="btn btn-sm btn-danger">Register Now</a>
+      <a :href="eventLink" target="_blank" class="btn btn-sm btn-danger"
+        >Join Now</a
+      >
     </div>
   </div>
 </template>
 
 <script>
+import DetailItem from "./DetailItem.vue";
+
 export default {
   name: "EsportsEventCard",
+  components: {
+    DetailItem,
+  },
   props: {
     eventName: String,
     eventDescription: String,
@@ -34,15 +42,40 @@ export default {
     eventGame: String,
     eventLink: String,
   },
+  methods: {
+    formatDate(date) {
+      const dateObject = new Date(date);
+      let d = dateObject.toLocaleString("en-IN", {
+        timeZone: "Asia/Colombo",
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+      });
+
+      return d;
+    },
+    formatTime(time) {
+      return new Date(`1970-01-01T${time}Z`).toLocaleTimeString("en-US", {
+        hour: "numeric",
+        minute: "numeric",
+        hour12: true,
+      });
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
+.items-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
 .list-group-item {
   background-color: transparent;
 }
 .event-card {
-  max-width: fit-content;
+  margin: 3px;
   .event-image {
     border-radius: 6px 6px 0 0;
     box-shadow: 0px 5px 11px 0px #0000008a;

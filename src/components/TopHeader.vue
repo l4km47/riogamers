@@ -9,7 +9,7 @@
               ><i class="fab fa-facebook-square"></i
             ></a>
           </li>
-          <li class="header-social-li">
+          <li v-if="show" class="header-social-li">
             <a :href="twitter" class="header-social-a" target="_blank"
               ><i class="fab fa-twitter-square"></i
             ></a>
@@ -81,7 +81,7 @@
                 <ul class="navbar-nav">
                   <li v-for="rout in routers" :key="rout.id" class="nav-item">
                     <router-link
-                      :class="'neon nav-link ' + (rout.active ? 'active' : '')"
+                      :class="' nav-link ' + (rout.active ? 'active' : '')"
                       aria-current="page"
                       :to="rout.to"
                       data-bs-dismiss="offcanvas"
@@ -96,7 +96,7 @@
                   >
                     <router-link
                       v-if="!username"
-                      :class="'neon nav-link ' + (rout.active ? 'active' : '')"
+                      :class="' nav-link ' + (rout.active ? 'active' : '')"
                       aria-current="page"
                       :to="rout.to"
                       data-bs-dismiss="offcanvas"
@@ -106,7 +106,7 @@
                   </li>
                   <router-link
                     v-if="username"
-                    class="neon nav-link"
+                    class="nav-link"
                     aria-current="page"
                     to="/profile"
                     data-bs-dismiss="offcanvas"
@@ -124,16 +124,20 @@
 
   <login-modal></login-modal>
   <RegistrationModal />
+  <discord-model></discord-model>
 </template>
 
 <script>
 import LoginModal from "./LoginModel.vue";
 import RegistrationModal from "./RegistrationModal.vue";
 import axios from "../axios";
+import DiscordModel from "./DiscordModel.vue";
+
 export default {
   components: {
     LoginModal,
     RegistrationModal,
+    DiscordModel,
   },
   async created() {
     const response = await axios.get("/profile", {
@@ -143,6 +147,13 @@ export default {
   },
   data() {
     return {
+      facebook: "https://www.facebook.com/riogamerslk",
+      tiktok: "https://www.tiktok.com/@riogamerslk",
+      twitter: "",
+      instagrame: "https://www.instagram.com/riogamerslk/",
+      youtube: "https://www.youtube.com/riogamerslk",
+      twitch: "https://www.twitch.tv/riogamerslk",
+      discord: "https://discord.gg/BJDuAutU4t",
       username: "",
       logo: "/public/logo.png",
       modalShown: false,
@@ -174,6 +185,19 @@ export default {
       passwordError: "",
     };
   },
+  mounted() {
+    let showModalFlag = false;
+    const lastShown = localStorage.getItem("discordModalLastShown");
+    console.log(lastShown);
+    const now = new Date().getTime();
+
+    // show modal if it hasn't been shown in the last hour
+    if (!lastShown || now - parseInt(lastShown, 10) >= 3600000) {
+      showModalFlag = true;
+      localStorage.setItem("discordModalLastShown", now.toString());
+    }
+    if (showModalFlag) this.showModal("discordmodel");
+  },
   methods: {
     login() {},
     showModal(id) {
@@ -195,5 +219,9 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+$base-color: #ff7d7d;
+a:visited {
+  color: $base-color;
+}
 </style>
